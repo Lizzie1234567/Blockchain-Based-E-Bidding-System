@@ -8,7 +8,6 @@ from Crypto.PublicKey.RSA import RsaKey
 from .ANode import ANode
 
 
-
 class biddingUser(ANode):
     verified_transactions: dict[str, Transaction]
 
@@ -171,7 +170,7 @@ class biddingUser(ANode):
         self.verified_transactions[t_hash] = transaction
         return True
 
-    def send_message(self, address: str, total_gas: int, total_send:int, message: Messages.AMessage) -> \
+    def send_message(self, address: str, total_gas: int, total_send: int, message: Messages.AMessage) -> \
             Optional[Transactions.Transaction]:
         t = super().send_message(
             address=address,
