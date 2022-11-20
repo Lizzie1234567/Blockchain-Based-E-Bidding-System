@@ -10,7 +10,7 @@ class ENodeType(int, Enum):
     BIDDINGUSER: int = 1
     TENDERUSER: int = 2
     SUPERVISOR: int = 3
-111
+
 
 class ANode(ABC):
 
