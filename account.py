@@ -9,12 +9,15 @@ from database import S_AccountDB
 from database import T_AccountDB
 from database import B_AccountDB
 from const import Const
+from CA_Sig import Ecdsa
 
 
 def S_account():
     Const.Permission_Level = 0
     private_key = lib.common.random_key()
     public_key = lib.common.hash160(private_key.encode())
+
+
     address = pubkey_to_address(public_key.encode())
     adb = S_AccountDB()
     adb.insert({'pubkey': public_key, 'address': address})

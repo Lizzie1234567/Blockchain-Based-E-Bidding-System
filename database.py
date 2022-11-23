@@ -15,10 +15,14 @@ PK_BIDDINGFILE = 'PK_bidding'
 SK_TENDERFILE = 'SK_tender'
 PK_TENDERFILE = 'PK_tender'
 
+W_DATAFILE = 'Win_data'
+T_DATAFILE = 'T_data'
+B_DATAFILE = 'B_data'
+
 NODEFILE = 'node'
 
-class BaseDB():
 
+class BaseDB():
     filepath = ''
 
     def __init__(self):
@@ -32,13 +36,13 @@ class BaseDB():
         return self.read()
 
     def insert(self, item):
-        self.write(item)  
+        self.write(item)
 
     def read(self):
         raw = ''
         if not os.path.exists(self.filepath):
             return []
-        with open(self.filepath,'r+') as f:
+        with open(self.filepath, 'r+') as f:
             raw = f.readline()
         if len(raw) > 0:
             data = json.loads(raw)
@@ -48,16 +52,16 @@ class BaseDB():
 
     def write(self, item):
         data = self.read()
-        if isinstance(item,list):
+        if isinstance(item, list):
             data = data + item
         else:
             data.append(item)
-        with open(self.filepath,'w+') as f:
+        with open(self.filepath, 'w+') as f:
             f.write(json.dumps(data))
         return True
 
     def clear(self):
-        with open(self.filepath,'w+') as f:
+        with open(self.filepath, 'w+') as f:
             f.write('')
 
     def hash_insert(self, item):
@@ -67,12 +71,13 @@ class BaseDB():
                 exists = True
                 break
         if not exists:
-            self.write(item)  
+            self.write(item)
+
 
 class NodeDB(BaseDB):
 
     def set_path(self):
-        self.filepath = NODEFILE  
+        self.filepath = NODEFILE
 
 
 class S_AccountDB(BaseDB):
@@ -83,6 +88,7 @@ class S_AccountDB(BaseDB):
         ac = self.read()
         return ac[0]
 
+
 class T_AccountDB(BaseDB):
     def set_path(self):
         self.filepath = T_ACCOUNTFILE
@@ -90,6 +96,7 @@ class T_AccountDB(BaseDB):
     def find_one(self):
         ac = self.read()
         return ac[0]
+
 
 class B_AccountDB(BaseDB):
     def set_path(self):
@@ -99,6 +106,7 @@ class B_AccountDB(BaseDB):
         ac = self.read()
         return ac[0]
 
+
 class PB_KeyDB(BaseDB):
     def set_path(self):
         self.filepath = PK_BIDDINGFILE
@@ -106,6 +114,7 @@ class PB_KeyDB(BaseDB):
     def find_one(self):
         ac = self.read()
         return ac[0]
+
 
 class SB_KeyDB(BaseDB):
     def set_path(self):
@@ -115,6 +124,7 @@ class SB_KeyDB(BaseDB):
         ac = self.read()
         return ac[0]
 
+
 class PT_KeyDB(BaseDB):
     def set_path(self):
         self.filepath = PK_TENDERFILE
@@ -122,6 +132,7 @@ class PT_KeyDB(BaseDB):
     def find_one(self):
         ac = self.read()
         return ac[0]
+
 
 class ST_KeyDB(BaseDB):
     def set_path(self):
@@ -155,10 +166,27 @@ class BlockChainDB(BaseDB):
     def insert(self, item):
         self.hash_insert(item)
 
+
+class W_DataDB(BaseDB):
+    def set_path(self):
+        self.filepath = W_DATAFILE
+
+
+class T_DataDB(BaseDB):
+    def set_path(self):
+        self.filepath = T_DATAFILE
+
+
+class B_DataDB(BaseDB):
+    def set_path(self):
+        self.filepath = B_DATAFILE
+
+
 class DataDB(BaseDB):
     """
     Datas that save with blockchain.
     """
+
     def set_path(self):
         self.filepath = TXFILE
 
@@ -171,15 +199,17 @@ class DataDB(BaseDB):
         return one
 
     def insert(self, txs):
-        if not isinstance(txs,list):
+        if not isinstance(txs, list):
             txs = [txs]
         for tx in txs:
             self.hash_insert(tx)
+
 
 class UnDataDB(DataDB):
     """
     Datas that doesn't store in blockchain.
     """
+
     def set_path(self):
         self.filepath = UNTXFILE
 

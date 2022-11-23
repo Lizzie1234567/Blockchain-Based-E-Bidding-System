@@ -17,6 +17,7 @@ class Ecdsa:
 
     @staticmethod
     def sign_sig(message, sk):
+        # key = ECC.import_key()
         signer = DSS.new(sk, 'fips-186-3')
         hasher = SHA256.new(message.encode())
         sig = signer.sign(hasher)
@@ -24,6 +25,7 @@ class Ecdsa:
 
     @staticmethod
     def verify_sig(message2, pk, sig2):
+        # key = ECC.import_key()
         verifier = DSS.new(pk, 'fips-186-3')
         hasher2 = SHA256.new(message2.encode())
         try:

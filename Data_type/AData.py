@@ -2,22 +2,21 @@ import time
 import json
 import hashlib
 from model import Model
-from database import DataDB, UnDataDB
-from rpc import BroadCast
+from database import *
+from rpc import broadCast
 from enum import Enum
-from database import PB_KeyDB,PT_KeyDB
-from CA_Sig.RSAED import rsa_encrypt,rsa_decrypt
-from CA_Sig.Ecdsa import Ecdsa
+from database import *
+from CA_Sig.RSAED import *
+from CA_Sig.Ecdsa import *
 
 class AData():
 
-    def __init__(self, CompanyName = None, NodeAddress=None,
-                 msg="Nothing",credit: int = 0, datatype=0):
+    def __init__(self, CompanyName, msg, timestamp, credit: int = 0, datatype=0):
         self.CompanyName = CompanyName
-        self.timestamp = int(time.time())
         self.msg = msg
-        self.credit=credit
-        self.datatype=datatype
+        self.timestamp = timestamp
+        self.credit = credit
+        self.datatype = datatype
         """
         class EnumDataType(int, Enum):
             AData: int = 0
@@ -27,11 +26,37 @@ class AData():
             Tender_Data: int = 4
         """
 
+    #RSA加密CompanyName、msg
+    def rsa_encryption(self):
+        pk = PB_KeyDB.find_one()
+        self.CompanyName = rsa_encrypt(pk, self.CompanyName)
+        pk2 = PT_KeyDB.find_one()
+        self.msg=rsa_encrypt(pk, self.msg)
+
+    @classmethod
+    def publish(cls, com_name, product, cre, dtype):
+        e = Ecdsa.generate_keys()
+        CompanyName = Ecdsa.sign_sig(com_name, e.sk)
+        msg = Ecdsa.sign_sig(product, e.sk)
+        credit = cre
+        datatype = dtype
+        dt = cls(CompanyName, msg, time.time(), credit, datatype)
+        dt_dict = dt.to_dict()
+        B_DataDB().insert(dt_dict)
+        return dt_dict
+
+
+
+
+
+
+
 
     @property
     def gen_hash(self):
         return hashlib.sha256((str(self.timestamp)+ str(self.CompanyName)+ str(self.credit)
                                + str(self.datatype)+ str(self.msg)).encode('utf-8')).hexdigest()
+
 
 
     @staticmethod
@@ -43,17 +68,5 @@ class AData():
         BroadCast().blocked_datas(dts)
 
     def to_dict(self):
-        dt = self.__dict__
-        return dt
-
-
-    #RSA加密CompanyName、msg
-    def rsa_encryption(self):
-        pk = PB_KeyDB.find_one()
-        self.CompanyName = rsa_encrypt(pk, self.CompanyName)
-        pk2 = PT_KeyDB.find_one()
-        self.msg=rsa_encrypt(pk, self.msg)
-
-
-
+        return self.__dict__
 
