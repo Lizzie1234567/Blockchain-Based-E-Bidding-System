@@ -4,7 +4,7 @@
 # coding:utf-8
 from block import Block
 import time
-from data import Vout, Data
+from data import Data
 from account import get_account
 from database import BlockChainDB, DataDB, UnDataDB
 from lib.common import cprint
@@ -107,25 +107,6 @@ class supervisor(Node):
         Block.spread(cb.to_dict())
         Data.blocked_spread(untxs)
         return cb
-
-        def gen_hash(self):
-            return hashlib.sha256((str(self.timestamp) + str(self.vin) + str(self.vout)).encode('utf-8')).hexdigest()
-
-        @classmethod
-        def transfer(cls, from_addr, to_addr, amount):
-            if not isinstance(amount, int):
-                amount = int(amount)
-            unspents = Vout.get_unspent(from_addr)
-            ready_utxo, change = select_outputs_greedy(unspents, amount)
-            print('ready_utxo', ready_utxo[0].to_dict())
-            vin = ready_utxo
-            vout = []
-            vout.append(Vout(to_addr, amount))
-            vout.append(Vout(from_addr, change))
-            tx = cls(vin, vout)
-            tx_dict = tx.to_dict()
-            UnDataDB().insert(tx_dict)
-            return tx_dict
 
         @staticmethod
         def unblock_spread(undt):
