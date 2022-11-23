@@ -4,24 +4,27 @@ import time
 from model import Model
 from rpc import BroadCast
 
+
 class Block(Model):
 
-    def __init__(self, index, timestamp, tx, previous_hash):
+    def __init__(self, index, timestamp, data, preHash):
         self.index = index
         self.timestamp = timestamp
-        self.tx = tx
-        self.previous_block = previous_hash
+        self.data = data
+        self.preHash = preHash
 
     def header_hash(self):
         """
         Refer to bitcoin block header hash
-        """          
-        return hashlib.sha256((str(self.index) + str(self.timestamp) + str(self.tx) + str(self.previous_block)).encode('utf-8')).hexdigest()
+        """
+        return hashlib.sha256(
+            (str(self.index) + str(self.timestamp) + str(self.data) + str(self.previous_block)).encode(
+                'utf-8')).hexdigest()
 
     def pow(self):
         """
         Proof of work. Add nouce to block.
-        """        
+        """
         nouce = 0
         while self.valid(nouce) is False:
             nouce += 1
@@ -33,11 +36,11 @@ class Block(Model):
         Block hash generate. Add hash to block.
         """
         self.hash = self.ghash(nouce)
-    
+
     def ghash(self, nouce):
         """
         Block hash generate.
-        """        
+        """
         header_hash = self.header_hash()
         token = ''.join((header_hash, str(nouce))).encode('utf-8')
         return hashlib.sha256(token).hexdigest()
