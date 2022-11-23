@@ -1,9 +1,10 @@
 # coding:utf-8
 from account import *
-from rpc import get_clients, BroadCast, start_server
+from rpc import get_clients, broadCast, start_server
 from data import *
 from database import *
 from block import *
+from PoA import *
 import sys
 import multiprocessing
 import rpc
@@ -22,7 +23,7 @@ class node():
 
     def add(self, args,a):
         add_node(args[0],a)
-        rpc.BroadCast().add_node(args[0],a)
+        rpc.broadCast().add_node(args[0],a)
         cprint('Allnode', get_nodes())
 
     def run(self, args):
@@ -37,7 +38,7 @@ class miner():
         if get_account() == None:
             cprint('ERROR','Please create account before start miner.')
             exit()
-        start_node(args[0])
+        start_node(PoA())
         while True :
             cprint('Miner new block',mine().to_dict())
 
