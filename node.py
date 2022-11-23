@@ -1,7 +1,7 @@
 # coding:utf-8
 import multiprocessing
 import rpc
-from database import NodeDB, DataDB, BlockChainDB
+from database import *
 from lib.common import cprint
 
 def start_node(hostport='0.0.0.0:3009'):
@@ -23,7 +23,7 @@ def init_node():
     """
     Download blockchain from node compare with local database and select the longest blockchain.
     """
-    all_node_blockchains = rpc.oadCast().get_blockchain()
+    all_node_blockchains = rpc.broadCast().get_blockchain()
     all_node_txs = rpc.BroadCast().get_datas()
     bcdb = BlockChainDB()
     txdb = DataDB()
@@ -42,9 +42,19 @@ def init_node():
 def get_nodes():
     return NodeDB().find_all()
 
-def add_node(address):
-    ndb = NodeDB()
-    all_nodes = ndb.find_all()
+def add_node(address,a: int):
+    if a==1:
+        ndb=S_AccountDB()
+        all_nodes = ndb.find_all()
+    elif a==2:
+        ndb=T_AccountDB()
+        all_nodes = ndb.find_all()
+    elif a==3:
+        ndb=B_AccountDB()
+        all_nodes = ndb.find_all()
+    else:
+        Exception("Error input")
+
     if address.find('http') != 0:
         address = 'http://' + address
     all_nodes.append(address)
