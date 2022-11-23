@@ -16,7 +16,7 @@ def S_account():
     Const.Permission_Level = 0
     private_key = lib.common.random_key()
     public_key = lib.common.hash160(private_key.encode())
-
+    print(Const.Permission_Level)
 
     address = pubkey_to_address(public_key.encode())
     adb = S_AccountDB()
