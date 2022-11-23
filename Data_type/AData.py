@@ -5,6 +5,11 @@ from model import Model
 from database import DataDB, UnDataDB
 from rpc import BroadCast
 from enum import Enum
+from database import PB_KeyDB,PT_KeyDB
+from CA_Sig.RSAED import rsa_encrypt,rsa_decrypt
+from CA_Sig.Ecdsa import Ecdsa
+
+
 
 
 class EnumDataType(int, Enum):
@@ -17,18 +22,19 @@ class EnumDataType(int, Enum):
 
 class AData():
 
-    def __init__(self, CompanyName: str = None, NodeAddress=None, msg="Nothing", signature: str = None):
+    def __init__(self, CompanyName = None, NodeAddress=None,
+                 msg="Nothing", signature = None,credit: int = 0):
         self.CompanyName = CompanyName
-        self.NodeAddress= NodeAddress
         self.timestamp = int(time.time())
         self.msg = msg
         self.signature = signature
-        self.hash = self.gen_hash()
+        self.credit=credit
         self.datatype=self.data_type()
 
     @property
     def data_type(self) -> int:
         return EnumDataType.Date_Transfer
+    @property
 
     def gen_hash(self):
         return hashlib.sha256((str(self.timestamp)+ str(self.CompanyName)+ str(self.signature)
@@ -46,5 +52,13 @@ class AData():
     def to_dict(self):
         dt = self.__dict__
         return dt
+
+    def rsa_encryption(self):
+        pk = PB_KeyDB.find_one()
+        self.CompanyName = rsa_encrypt(pk, self.CompanyName)
+        pk2 = PT_KeyDB.find_one()
+        self.msg=rsa_encrypt(pk, self.msg)
+
+
 
 
