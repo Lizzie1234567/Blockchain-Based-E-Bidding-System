@@ -11,13 +11,13 @@ from database import BlockChainDB, TransactionDB, UnTransactionDB
 from lib.common import unlock_sig, lock_sig
 
 MAX_COIN = 21000000
-REWARD = 20
+# REWARD = 20
 
 
-def reward():
-    reward = Vout(get_account()['address'], REWARD)
-    tx = Transaction([], reward)
-    return tx
+# def reward():
+#     reward = Vout(get_account()['address'], REWARD)
+#     tx = Transaction([], reward)
+#     return tx
 
 
 def coinbase():
