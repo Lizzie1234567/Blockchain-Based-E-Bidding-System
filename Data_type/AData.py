@@ -9,12 +9,6 @@ from database import PB_KeyDB,PT_KeyDB
 from CA_Sig.RSAED import rsa_encrypt,rsa_decrypt
 from CA_Sig.Ecdsa import Ecdsa
 
-
-
-
-
-
-
 class AData():
 
     def __init__(self, CompanyName = None, NodeAddress=None,

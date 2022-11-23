@@ -4,20 +4,23 @@ import rpc
 from database import *
 from lib.common import cprint
 
+
 def start_node(hostport='0.0.0.0:3009'):
     init_node()
     cprint('INFO', 'Node initialize success.')
+    # noinspection PyBroadException
     try:
         if hostport.find('.') != -1:
-            host,port = hostport.split(':')
+            host, port = hostport.split(':')
         else:
             host = '0.0.0.0'
             port = hostport
     except Exception:
-        cprint('ERROR','params must be {port} or {host}:{port} , ps: 3009 or 0.0.0.0:3009')
-    p = multiprocessing.Process(target=rpc.start_server,args=(host,int(port)))
+        cprint('ERROR', 'params must be {port} or {host}:{port} , ps: 3009 or 0.0.0.0:3009')
+    p = multiprocessing.Process(target=rpc.start_server, args=(host, int(port)))
     p.start()
-    cprint('INFO','Node start success. Listen at %s.' % (hostport,))
+    cprint('INFO', 'Node start success. Listen at %s.' % (hostport,))
+
 
 def init_node():
     """
@@ -38,19 +41,21 @@ def init_node():
         if len(txs) > len(datas):
             txdb.clear()
             txdb.write(txs)
-    
+
+
 def get_nodes():
     return NodeDB().find_all()
 
-def add_node(address,a: int):
-    if a==1:
-        ndb=S_AccountDB()
+
+def add_node(address, a: int):
+    if a == 1:
+        ndb = S_AccountDB()
         all_nodes = ndb.find_all()
-    elif a==2:
-        ndb=T_AccountDB()
+    elif a == 2:
+        ndb = T_AccountDB()
         all_nodes = ndb.find_all()
-    elif a==3:
-        ndb=B_AccountDB()
+    elif a == 3:
+        ndb = B_AccountDB()
         all_nodes = ndb.find_all()
     else:
         Exception("Error input")
@@ -62,11 +67,14 @@ def add_node(address,a: int):
     ndb.write(rm_dup(all_nodes))
     return address
 
+
 def check_node(address):
     pass
 
+
 def rm_dup(nodes):
-    return sorted(set(nodes)) 
-    
-if __name__=='__main__':
+    return sorted(set(nodes))
+
+
+if __name__ == '__main__':
     start_node(3009)
