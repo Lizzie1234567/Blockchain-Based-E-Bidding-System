@@ -57,7 +57,7 @@ def add_node(address,a: int):
 
     if address.find('http') != 0:
         address = 'http://' + address
-    all_nodes.append(address)
+        all_nodes.append(address)
     ndb.clear()
     ndb.write(rm_dup(all_nodes))
     return address
