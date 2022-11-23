@@ -14,13 +14,16 @@ from database import DataDB, UnDataDB
 from rpc import BroadCast
 from enum import Enum
 from .AData import EnumDataType, AData
+from database import PB_KeyDB
+from CA_Sig.RSAED import rsa_encrypt
 
 
 class Bidding_Data(AData):
 
-    def __init__(self, credit=0, msg="Nothing"):
+    def __init__(self, credit: int = 0, msg: str = "Nothing"):
+        pk = PB_KeyDB.find_one()
         self.credit = credit
-        self.msg = msg
+        self.msg = rsa_encrypt(pk, msg)
         self.hash = self.gen_hash()
         self.datatype = self.data_type()
 
