@@ -5,7 +5,7 @@ from Crypto.Signature import DSS
 
 class Ecdsa:
 
-    def __init__(self, sk, pk):
+    def __init__(self, sk = None, pk = None):
         self.sk = sk
         self.pk = pk
 
