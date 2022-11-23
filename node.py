@@ -1,7 +1,7 @@
 # coding:utf-8
 import multiprocessing
 import rpc
-from database import NodeDB, TransactionDB, BlockChainDB
+from database import NodeDB, DataDB, BlockChainDB
 from lib.common import cprint
 
 def start_node(hostport='0.0.0.0:3009'):
@@ -24,18 +24,18 @@ def init_node():
     Download blockchain from node compare with local database and select the longest blockchain.
     """
     all_node_blockchains = rpc.BroadCast().get_blockchain()
-    all_node_txs = rpc.BroadCast().get_transactions()
+    all_node_txs = rpc.BroadCast().get_datas()
     bcdb = BlockChainDB()
-    txdb = TransactionDB()
+    txdb = DataDB()
     blockchain = bcdb.find_all()
-    transactions = txdb.find_all()
+    datas = txdb.find_all()
     # If there is a blochain downloaded longer than local database then relace local's.
     for bc in all_node_blockchains:
         if len(bc) > len(blockchain):
             bcdb.clear()
             bcdb.write(bc)
     for txs in all_node_txs:
-        if len(txs) > len(transactions):
+        if len(txs) > len(datas):
             txdb.clear()
             txdb.write(txs)
     

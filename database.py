@@ -99,9 +99,9 @@ class BlockChainDB(BaseDB):
     def insert(self, item):
         self.hash_insert(item)
 
-class TransactionDB(BaseDB):
+class DataDB(BaseDB):
     """
-    Transactions that save with blockchain.
+    Datas that save with blockchain.
     """
     def set_path(self):
         self.filepath = TXFILE
@@ -120,9 +120,9 @@ class TransactionDB(BaseDB):
         for tx in txs:
             self.hash_insert(tx)
 
-class UnTransactionDB(TransactionDB):
+class UnDataDB(DataDB):
     """
-    Transactions that doesn't store in blockchain.
+    Datas that doesn't store in blockchain.
     """
     def set_path(self):
         self.filepath = UNTXFILE

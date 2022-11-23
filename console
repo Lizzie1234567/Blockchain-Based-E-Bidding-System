@@ -1,7 +1,7 @@
 # coding:utf-8
 from account import *
 from rpc import get_clients, BroadCast, start_server
-from transaction import *
+from data import *
 from database import *
 from block import *
 import sys
@@ -62,13 +62,13 @@ class Blockchain():
 class Tx():
 
     def list(self, args):
-        for t in TransactionDB().find_all():
-            cprint('Transaction',t)
+        for t in DataDB().find_all():
+            cprint('Data',t)
 
     def transfer(self, args):
-        tx = Transaction.transfer(args[0], args[1], args[2])
-        print(Transaction.unblock_spread(tx))
-        cprint('Transaction tranfer',tx)
+        tx = Data.transfer(args[0], args[1], args[2])
+        print(Data.unblock_spread(tx))
+        cprint('Data tranfer',tx)
 
 def usage(class_name):
     module = globals()[upper_first(class_name)]

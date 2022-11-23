@@ -2,7 +2,7 @@
 from xmlrpc.server import SimpleXMLRPCServer
 from xmlrpc.client import ServerProxy
 from node import get_nodes, add_node
-from database import BlockChainDB, UnTransactionDB, TransactionDB
+from database import BlockChainDB, UnDataDB, DataDB
 from lib.common import cprint
 
 server = None
@@ -25,23 +25,23 @@ class RpcServer():
     def new_block(self, block):
         cprint('RPC', block)
         BlockChainDB().insert(block)
-        UnTransactionDB().clear()
+        UnDataDB().clear()
         cprint('INFO', "Receive new block.")
         return True
 
-    def get_transactions(self):
-        tdb = TransactionDB()
+    def get_datas(self):
+        tdb = DataDB()
         return tdb.find_all()
 
-    def new_untransaction(self, untx):
+    def new_undata(self, untx):
         cprint(__name__, untx)
-        UnTransactionDB().insert(untx)
-        cprint('INFO', "Receive new unchecked transaction.")
+        UnDataDB().insert(untx)
+        cprint('INFO', "Receive new unchecked data.")
         return True
 
-    def blocked_transactions(self, txs):
-        TransactionDB().write(txs)
-        cprint('INFO', "Receive new blocked transactions.")
+    def blocked_datas(self, txs):
+        DataDB().write(txs)
+        cprint('INFO', "Receive new blocked datas.")
         return True
 
     def add_node(self, address):
@@ -50,7 +50,7 @@ class RpcServer():
 
 
 class RpcClient():
-    ALLOW_METHOD = ['get_transactions', 'get_blockchain', 'new_block', 'new_untransaction', 'blocked_transactions',
+    ALLOW_METHOD = ['get_datas', 'get_blockchain', 'new_block', 'new_undata', 'blocked_datas',
                     'ping', 'add_node']
 
     def __init__(self, node):

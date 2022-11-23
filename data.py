@@ -3,7 +3,7 @@ import time
 import json
 import hashlib
 from model import Model
-from database import TransactionDB, UnTransactionDB
+from database import DataDB, UnDataDB
 from rpc import BroadCast
 
 
@@ -30,7 +30,7 @@ class Vout(Model):
         
         """
         unspent = []
-        all_tx = TransactionDB().find_all()
+        all_tx = DataDB().find_all()
         spend_vin = []
         [spend_vin.extend(item['vin']) for item in all_tx]
         has_spend_hash = [vin['hash'] for vin in spend_vin]
@@ -43,7 +43,7 @@ class Vout(Model):
         return [Vin(tx['hash'], tx['amount']) for tx in unspent]
 
 
-class Transaction():
+class Data():
     def __init__(self, vin, vout, ):
         self.timestamp = int(time.time())
         self.vin = vin
@@ -66,16 +66,16 @@ class Transaction():
         vout.append(Vout(from_addr, change))
         tx = cls(vin, vout)
         tx_dict = tx.to_dict()
-        UnTransactionDB().insert(tx_dict)
+        UnDataDB().insert(tx_dict)
         return tx_dict
 
     @staticmethod
-    def unblock_spread(untx):
-        BroadCast().new_untransaction(untx)
+    def unblock_spread(undt):
+        BroadCast().new_undata(undt)
 
     @staticmethod
-    def blocked_spread(txs):
-        BroadCast().blocked_transactions(txs)
+    def blocked_spread(dts):
+        BroadCast().blocked_datas(dts)
 
     def to_dict(self):
         dt = self.__dict__
