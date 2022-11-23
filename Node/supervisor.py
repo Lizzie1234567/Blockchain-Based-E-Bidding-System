@@ -71,9 +71,6 @@ class supervisor(Node):
     def get_blockchain(self):
         pass
 
-    def broadcast_block(self):
-        pass
-
     # 没写完，要选择4种类型其中一种
     def new_data(self):
         data = Data()
@@ -96,9 +93,6 @@ class supervisor(Node):
         untx_hashes = untxdb.all_hashes()
         # Clear the undata database.
         untxdb.clear()
-
-        # Miner reward is the first data.
-        untx_hashes.insert(0, new_data.hash)
         cb = Block(last_block['index'] + 1, int(time.time()), untx_hashes, last_block['hash'])
         # Save block and data to database.
         BlockChainDB().insert(cb.to_dict())
@@ -108,9 +102,7 @@ class supervisor(Node):
         Data.blocked_spread(untxs)
         return cb
 
-        @staticmethod
-        def unblock_spread(undt):
-            BroadCast().new_undata(undt)
+
 
 
 

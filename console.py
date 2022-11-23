@@ -6,7 +6,7 @@ from database import *
 from block import *
 import sys
 import multiprocessing
-import rpc 
+import rpc
 from node import *
 from lib.common import cprint
 import inspect
@@ -16,7 +16,7 @@ MODULES = ['account','tx','blockchain','miner','node']
 def upper_first(string):
     return string[0].upper()+string[1:]
 
-class Node():
+class biddingUser():
 
     def add(self, args):
         add_node(args[0])
@@ -30,7 +30,22 @@ class Node():
         for t in NodeDB().find_all():
             cprint('Node',t)
 
-class Miner():
+
+class tenderUser():
+
+    def add(self, args):
+        add_node(args[0])
+        rpc.BroadCast().add_node(args[0])
+        cprint('Allnode', get_nodes())
+
+    def run(self, args):
+        start_node(args[0])
+
+    def list(self, args):
+        for t in NodeDB().find_all():
+            cprint('Node', t)
+
+class miner():
     def start(self, args):
         if get_account() == None:
             cprint('ERROR','Please create account before start miner.')
