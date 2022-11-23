@@ -29,7 +29,7 @@ class AData():
 
 
     @property
-    def gen_hash(self):
+    def get_hash(self):
         return hashlib.sha256((str(self.timestamp)+ str(self.CompanyName)+ str(self.credit)
                                + str(self.datatype)+ str(self.msg)).encode('utf-8')).hexdigest()
 
