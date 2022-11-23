@@ -45,7 +45,7 @@ class RpcServer():
         return True
 
     def add_node(self, address,a: int):
-        add_node(address)
+        add_node(address,a)
         return True
 
 

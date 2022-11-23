@@ -43,13 +43,8 @@ class miner():
             cprint('Miner new block',mine().to_dict())
 
 class Account():
-    def create(self, nodetype = 2):
-        if(nodetype == 0):
-            ac = S_account()
-        elif(nodetype == 1):
-            ac = T_account()
-        else:
-            ac = B_account()
+    def create(self, args):
+        ac = new_account()
         cprint('Private Key',ac[0])
         cprint('Public Key',ac[1])
         cprint('Address',ac[2])
