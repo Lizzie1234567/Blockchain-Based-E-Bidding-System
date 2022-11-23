@@ -1,7 +1,7 @@
 # coding:utf-8
 from account import *
 from miner import mine
-from rpc import get_clients, broadCast, start_server
+from rpc import get_clients, BroadCast, start_server
 from data import *
 from database import *
 from block import *
@@ -25,7 +25,7 @@ class node():
 
     def add(self, args, a):
         add_node(args[0], a)
-        rpc.broadCast().add_node(args[0], a)
+        rpc.BroadCast().add_node(args[0], a)
         cprint('Allnode', get_nodes())
 
     def run(self, args):
@@ -36,25 +36,37 @@ class node():
             cprint('Node', t)
 
 
-class miner():
+class Miner():
     def start(self, args):
-        if get_B_account() == None:
+        if get_S_account() == None:
             cprint('ERROR', 'Please create account before start miner.')
             exit()
-        start_node(PoA())
+        start_node(args[0])
         while True:
             cprint('Miner new block', mine().to_dict())
 
 
 class Account():
-    def create(self, nodetype=2):
+    def createS(self,args):
 
-        if (nodetype == 0):
-            ac = S_account()
-        elif (nodetype == 1):
-            ac = T_account()
-        else:
-            ac = B_account()
+        ac = S_account()
+
+        cprint('Private Key', ac[0])
+        cprint('Public Key', ac[1])
+        cprint('Address', ac[2])
+
+    def createT(self,args):
+
+        ac = T_account()
+
+        cprint('Private Key', ac[0])
+        cprint('Public Key', ac[1])
+        cprint('Address', ac[2])
+
+    def createB(self,args):
+
+        ac = B_account()
+
         cprint('Private Key', ac[0])
         cprint('Public Key', ac[1])
         cprint('Address', ac[2])

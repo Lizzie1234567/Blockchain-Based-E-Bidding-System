@@ -65,7 +65,7 @@ class RpcClient():
         return noname
 
 
-class broadCast():
+class BroadCast():
 
     def __getattr__(self, name):
         def noname(*args, **kw):

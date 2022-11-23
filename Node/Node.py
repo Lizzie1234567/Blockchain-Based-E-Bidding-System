@@ -3,7 +3,7 @@ import json
 import hashlib
 from model import Model
 from database import DataDB, UnDataDB
-from rpc import broadCast
+from rpc import BroadCast
 from enum import Enum
 
 
@@ -27,11 +27,11 @@ class ANode():
 
     @staticmethod
     def unblock_spread(undt):
-        broadCast().new_undata(undt)
+        BroadCast().new_undata(undt)
 
     @staticmethod
     def blocked_spread(dts):
-        broadCast().blocked_datas(dts)
+        BroadCast().blocked_datas(dts)
 
     def to_dict(self):
         dt = self.__dict__

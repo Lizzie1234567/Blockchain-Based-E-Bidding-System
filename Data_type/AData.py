@@ -3,7 +3,7 @@ import json
 import hashlib
 from model import Model
 from database import *
-from rpc import broadCast
+from rpc import BroadCast
 from enum import Enum
 from database import *
 from CA_Sig.RSAED import *

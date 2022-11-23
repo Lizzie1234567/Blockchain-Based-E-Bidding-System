@@ -1,7 +1,7 @@
 # coding:utf-8
-
+from PoA import PoA
 from model import Model
-from rpc import broadCast
+from rpc import BroadCast
 from CA_Sig.Dhash import Dhash
 from CA_Sig.Dhash import Dhash
 
@@ -15,6 +15,7 @@ class Block(Model):
         self.preHash = preHash
         self.Btype = Btype
         self.hash = ""
+        self.miner = PoA()
 
     def get_hash(self):
         self.hash = Dhash.Dhash(str(self.index) + str(self.timestamp) + str(self.data) + str(self.preHash) + self.Btype)
@@ -24,11 +25,11 @@ class Block(Model):
 
     @classmethod
     def from_dict(cls, bdict):
-        b = cls(bdict['index'], bdict['timestamp'], bdict['data'], bdict['preHash'], bdict['type'])
+        b = cls(bdict['index'], bdict['timestamp'], bdict['data'], bdict['preHash'], bdict['Btype'])
         b.hash = bdict['hash']
-        b.nouce = bdict['nouce']
+        b.miner = bdict['miner']
         return b
 
     @staticmethod
     def spread(block):
-        broadCast().new_block(block)
+        BroadCast().new_block(block)
