@@ -36,6 +36,14 @@ def mine():
     Bidding_Data_list = []
     AnonyWin_Data_list = []
     PublicWin_Data_list = []
+    untxdb.clear()
+    lb = last_block['index']
+    lb = lb + 1
+    cb = Block(lb, int(time.time()), Tender_Data_list, last_block['hash'], 1)
+    cb.get_hash()
+    BlockChainDB().insert(cb.to_dict())
+    Block.spread(cb.to_dict())
+    cprint('Miner new block', cb.to_dict())
 
     """
            class EnumDataType(int, Enum):
@@ -46,55 +54,55 @@ def mine():
                PublicWin_Data: int = 4
            """
 
-    for i in untxs:
-        if i.datatype == 1:
-            Tender_Data_list.append(i)
-        elif i.datatype == 2:
-            Bidding_Data_list.append(i)
-        elif i.datatype == 3:
-            AnonyWin_Data_list.append(i)
-        elif i.datatype == 4:
-            PublicWin_Data_list.append(i)
-    # untxs_dict = [untx.to_dict() for untx in untxs]
-    # Clear the untransaction database.
-    untxdb.clear()
-    lb = last_block['index']
-    """
-    class EnumDataType(int, Enum):
-        AData: int = 0
-        Tender_Data: int = 1
-        Bidding_Data: int = 2
-        AnonyWin_Data: int = 3
-        Tender_Data: int = 4
-    """
-    if Tender_Data_list:
-        lb = lb + 1
-        cb = Block(lb, int(time.time()), Tender_Data_list, last_block['hash'], 1)
-        cb.get_hash()
-        BlockChainDB().insert(cb.to_dict())
-        Block.spread(cb.to_dict())
-        cprint('Miner new block', cb.to_dict())
-    elif Bidding_Data_list:
-        lb = lb + 1
-        cb = Block(lb, int(time.time()), Bidding_Data_list, last_block['hash'], 2)
-        cb.get_hash()
-        BlockChainDB().insert(cb.to_dict())
-        Block.spread(cb.to_dict())
-        cprint('Miner new block', cb.to_dict())
-    elif AnonyWin_Data_list:
-        lb = lb + 1
-        cb = Block(lb, int(time.time()), AnonyWin_Data_list, last_block['hash'], 3)
-        cb.get_hash()
-        BlockChainDB().insert(cb.to_dict())
-        Block.spread(cb.to_dict())
-        cprint('Miner new block', cb.to_dict())
-    elif PublicWin_Data_list:
-        lb = lb + 1
-        cb = Block(lb, int(time.time()), PublicWin_Data_list, last_block['hash'], 4)
-        cb.get_hash()
-        BlockChainDB().insert(cb.to_dict())
-        Block.spread(cb.to_dict())
-        cprint('Miner new block', cb.to_dict())
+    # for i in untxs:
+    #     if i.datatype == 1:
+    #         Tender_Data_list.append(i)
+    #     elif i.datatype == 2:
+    #         Bidding_Data_list.append(i)
+    #     elif i.datatype == 3:
+    #         AnonyWin_Data_list.append(i)
+    #     elif i.datatype == 4:
+    #         PublicWin_Data_list.append(i)
+    # # untxs_dict = [untx.to_dict() for untx in untxs]
+    # # Clear the untransaction database.
+    # untxdb.clear()
+    # lb = last_block['index']
+    # """
+    # class EnumDataType(int, Enum):
+    #     AData: int = 0
+    #     Tender_Data: int = 1
+    #     Bidding_Data: int = 2
+    #     AnonyWin_Data: int = 3
+    #     Tender_Data: int = 4
+    # """
+    # if Tender_Data_list:
+    #     lb = lb + 1
+    #     cb = Block(lb, int(time.time()), Tender_Data_list, last_block['hash'], 1)
+    #     cb.get_hash()
+    #     BlockChainDB().insert(cb.to_dict())
+    #     Block.spread(cb.to_dict())
+    #     cprint('Miner new block', cb.to_dict())
+    # elif Bidding_Data_list:
+    #     lb = lb + 1
+    #     cb = Block(lb, int(time.time()), Bidding_Data_list, last_block['hash'], 2)
+    #     cb.get_hash()
+    #     BlockChainDB().insert(cb.to_dict())
+    #     Block.spread(cb.to_dict())
+    #     cprint('Miner new block', cb.to_dict())
+    # elif AnonyWin_Data_list:
+    #     lb = lb + 1
+    #     cb = Block(lb, int(time.time()), AnonyWin_Data_list, last_block['hash'], 3)
+    #     cb.get_hash()
+    #     BlockChainDB().insert(cb.to_dict())
+    #     Block.spread(cb.to_dict())
+    #     cprint('Miner new block', cb.to_dict())
+    # elif PublicWin_Data_list:
+    #     lb = lb + 1
+    #     cb = Block(lb, int(time.time()), PublicWin_Data_list, last_block['hash'], 4)
+    #     cb.get_hash()
+    #     BlockChainDB().insert(cb.to_dict())
+    #     Block.spread(cb.to_dict())
+    #     cprint('Miner new block', cb.to_dict())
 
     # Save block and transactions to database.
 

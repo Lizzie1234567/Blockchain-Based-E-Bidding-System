@@ -1,4 +1,6 @@
 # coding:utf-8
+import hashlib
+
 from PoA import PoA
 from model import Model
 from rpc import BroadCast
@@ -18,7 +20,7 @@ class Block(Model):
         self.miner = PoA()
 
     def get_hash(self):
-        self.hash = Dhash.Dhash(str(self.index) + str(self.timestamp) + str(self.data) + str(self.preHash) + self.Btype)
+        self.hash = hashlib.sha256(str(str(self.index) + str(self.timestamp) + str(self.data) + str(self.preHash) + str(self.Btype)).encode('utf-8')).hexdigest()
 
     def to_dict(self):
         return self.__dict__

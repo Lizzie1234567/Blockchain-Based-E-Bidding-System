@@ -42,7 +42,9 @@ class Miner():
             cprint('ERROR', 'Please create account before start miner.')
             exit()
         start_node(args[0])
-        # while True:
+        while True:
+            print('Miner new block')
+            mine()
 
 
 
