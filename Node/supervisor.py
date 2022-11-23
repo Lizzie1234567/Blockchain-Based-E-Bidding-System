@@ -34,15 +34,21 @@ from lib.common import unlock_sig, lock_sig
 #     DataDB().insert(rw.to_dict())
 #     return cb
 
+class supervisor():
+    def __int__(self,public_key: str =None,private_key: str = None):
+        self.public_key=public_key
+        self.private_key=private_key
 
-def get_all_undata():
-    UnDataDB().all_hashes()
 
 
-def mine():
-    """
-    Main miner method.
-    """
+    def get_all_undata(self):
+        UnDataDB().all_hashes()
+
+
+    def mine(self):
+        """
+        Main miner method.
+        """
     # Found last block and unchecked datas.
     last_block = BlockChainDB().last()
     if len(last_block) == 0:
@@ -72,15 +78,7 @@ def mine():
 
 
 
-class Data():
-    def __init__(self, name :str, bid_name :str, Etype=4, msg="Nothing",signature :str = None):
-        self.Etype = Etype
-        self.timestamp = float(time.time())
-        self.hash = self.gen_hash()
-        self.msg = msg
-        self.bid_name = bid_name
-        self.name = name
-        self.signature=signature
+
 
     def gen_hash(self):
         return hashlib.sha256((str(self.timestamp) + str(self.vin) + str(self.vout)).encode('utf-8')).hexdigest()
