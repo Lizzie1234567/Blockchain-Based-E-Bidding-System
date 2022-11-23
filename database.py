@@ -6,7 +6,15 @@ BASEDBPATH = 'data'
 BLOCKFILE = 'blockchain'
 TXFILE = 'tx'
 UNTXFILE = 'untx'
-ACCOUNTFILE = 'account'
+S_ACCOUNTFILE = 'S_account'
+T_ACCOUNTFILE = 'T_account'
+B_ACCOUNTFILE = 'B_account'
+
+SK_BIDDINGFILE = 'SK_bidding'
+PK_BIDDINGFILE = 'PK_bidding'
+SK_TENDERFILE = 'SK_tender'
+PK_TENDERFILE = 'PK_tender'
+
 NODEFILE = 'node'
 
 class BaseDB():
@@ -67,13 +75,31 @@ class NodeDB(BaseDB):
         self.filepath = NODEFILE  
 
 
-class AccountDB(BaseDB):
+class S_AccountDB(BaseDB):
     def set_path(self):
-        self.filepath = ACCOUNTFILE  
+        self.filepath = S_ACCOUNTFILE
 
     def find_one(self):
         ac = self.read()
         return ac[0]
+
+class T_AccountDB(BaseDB):
+    def set_path(self):
+        self.filepath = T_ACCOUNTFILE
+
+    def find_one(self):
+        ac = self.read()
+        return ac[0]
+
+class B_AccountDB(BaseDB):
+    def set_path(self):
+        self.filepath = B_ACCOUNTFILE
+
+    def find_one(self):
+        ac = self.read()
+        return ac[0]
+
+
 
 
 class BlockChainDB(BaseDB):
