@@ -112,42 +112,6 @@ class supervisor(Node):
         def unblock_spread(undt):
             BroadCast().new_undata(undt)
 
-        @staticmethod
-        def blocked_spread(dts):
-            BroadCast().blocked_datas(dts)
 
-        def to_dict(self):
-            dt = self.__dict__
-            if not isinstance(self.vin, list):
-                self.vin = [self.vin]
-            if not isinstance(self.vout, list):
-                self.vout = [self.vout]
-            dt['vin'] = [i.__dict__ for i in self.vin]
-            dt['vout'] = [i.__dict__ for i in self.vout]
-            return dt
 
-    def select_outputs_greedy(unspent, min_value):
-        if not unspent: return None
-        # 分割成两个列表。
-        lessers = [utxo for utxo in unspent if utxo.amount < min_value]
-        greaters = [utxo for utxo in unspent if utxo.amount >= min_value]
-        key_func = lambda utxo: utxo.amount
-        greaters.sort(key=key_func)
-        if greaters:
-            # 非空。寻找最小的greater。
-            min_greater = greaters[0]
-            change = min_greater.amount - min_value
-            return [min_greater], change
-        # 没有找到greaters。重新尝试若干更小的。
-        # 从大到小排序。我们需要尽可能地使用最小的输入量。
-        lessers.sort(key=key_func, reverse=True)
-        result = []
-        accum = 0
-        for utxo in lessers:
-            result.append(utxo)
-            accum += utxo.amount
-            if accum >= min_value:
-                change = accum - min_value
-                return result, change
-                # 没有找到。
-        return None, 0
+
