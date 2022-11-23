@@ -9,8 +9,6 @@ class Ecdsa:
         self.sk = sk
         self.pk = pk
 
-
-
     def generate_keys(self):
         key = ECC.generate(curve='p-256')
         self.sk = key.export_key(format='PEM')
@@ -33,21 +31,3 @@ class Ecdsa:
             return 0
         except ValueError:
             return 1
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
