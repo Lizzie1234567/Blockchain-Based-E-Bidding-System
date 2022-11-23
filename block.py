@@ -16,7 +16,7 @@ class Block(Model):
         self.hash = ''
 
     def get_hash(self):
-        return Dhash.Dhash(str(self.index) + str(self.timestamp) + str(self.data) + str(self.preHash) + self.Btype)
+        self.hash = Dhash.Dhash(str(self.index) + str(self.timestamp) + str(self.data) + str(self.preHash) + self.Btype)
 
     def to_dict(self):
         return self.__dict__
