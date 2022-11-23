@@ -15,10 +15,7 @@ class Block(Model):
         self.Btype = Btype
         self.hash = ''
 
-    def header_hash(self):
-        """
-        Refer to bitcoin block header hash
-        """
+    def get_hash(self):
         return Dhash.Dhash(str(self.index) + str(self.timestamp) + str(self.data) + str(self.preHash) + self.Btype)
 
 
