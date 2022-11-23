@@ -8,7 +8,7 @@ from CA_Sig.Dhash import Dhash
 
 class Block(Model):
 
-    def __init__(self, index, timestamp, data, preHash, Btype):
+    def __init__(self, index, timestamp, data, preHash, Btype=0):
         self.index = index
         self.timestamp = timestamp
         self.data: list = data
