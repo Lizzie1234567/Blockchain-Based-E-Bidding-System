@@ -12,33 +12,32 @@ from CA_Sig.Ecdsa import Ecdsa
 
 
 
-class EnumDataType(int, Enum):
-    Date_Transfer: int = 0
-    Tender_Data: int = 1
-    Bidding_Data: int = 2
-    AnonyWin_Data: int = 3
-    Tender_Data: int = 4
+
 
 
 class AData():
 
     def __init__(self, CompanyName = None, NodeAddress=None,
-                 msg="Nothing", signature = None,credit: int = 0):
+                 msg="Nothing",credit: int = 0, datatype=0):
         self.CompanyName = CompanyName
         self.timestamp = int(time.time())
         self.msg = msg
-        self.signature = signature
         self.credit=credit
-        self.datatype=self.data_type()
+        self.datatype=datatype
+        """
+        class EnumDataType(int, Enum):
+            AData: int = 0
+            Tender_Data: int = 1
+            Bidding_Data: int = 2
+            AnonyWin_Data: int = 3
+            Tender_Data: int = 4
+        """
 
-    @property
-    def data_type(self) -> int:
-        return EnumDataType.Date_Transfer
 
     @property
     def gen_hash(self):
-        return hashlib.sha256((str(self.timestamp)+ str(self.CompanyName)+ str(self.signature)
-                               + str(self.NodeAddress)+ str(self.msg)).encode('utf-8')).hexdigest()
+        return hashlib.sha256((str(self.timestamp)+ str(self.CompanyName)+ str(self.credit)
+                               + str(self.datatype)+ str(self.msg)).encode('utf-8')).hexdigest()
 
 
     @staticmethod
