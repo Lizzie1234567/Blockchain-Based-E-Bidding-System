@@ -35,14 +35,16 @@ class AData():
 
     @classmethod
     def publish(cls, com_name, product, cre, dtype):
-        e = Ecdsa.generate_keys()
-        CompanyName = Ecdsa.sign_sig(com_name, e.sk)
-        msg = Ecdsa.sign_sig(product, e.sk)
+        # e = Ecdsa.generate_keys()
+        # CompanyName = Ecdsa.sign_sig(com_name, e.sk)
+        # msg = Ecdsa.sign_sig(product, e.sk)
+        CompanyName = com_name
+        msg = product
         credit = cre
         datatype = dtype
         dt = cls(CompanyName, msg, time.time(), credit, datatype)
         dt_dict = dt.to_dict()
-        B_DataDB().insert(dt_dict)
+        UnDataDB().insert(dt_dict)
         return dt_dict
 
 

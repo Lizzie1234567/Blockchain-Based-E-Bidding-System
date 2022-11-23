@@ -21,11 +21,11 @@ def upper_first(string):
     return string[0].upper() + string[1:]
 
 
-class node():
+class Node():
 
-    def add(self, args, a):
-        add_node(args[0], a)
-        rpc.BroadCast().add_node(args[0], a)
+    def add(self, args):
+        add_node(args[0])
+        rpc.BroadCast().add_node(args[0])
         cprint('Allnode', get_nodes())
 
     def run(self, args):
@@ -42,8 +42,8 @@ class Miner():
             cprint('ERROR', 'Please create account before start miner.')
             exit()
         start_node(args[0])
-        while True:
-            cprint('Miner new block', mine().to_dict())
+        # while True:
+
 
 
 class Account():
