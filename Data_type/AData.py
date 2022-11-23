@@ -34,8 +34,8 @@ class AData():
     @property
     def data_type(self) -> int:
         return EnumDataType.Date_Transfer
-    @property
 
+    @property
     def gen_hash(self):
         return hashlib.sha256((str(self.timestamp)+ str(self.CompanyName)+ str(self.signature)
                                + str(self.NodeAddress)+ str(self.msg)).encode('utf-8')).hexdigest()
@@ -53,6 +53,8 @@ class AData():
         dt = self.__dict__
         return dt
 
+
+    #RSA加密CompanyName、msg
     def rsa_encryption(self):
         pk = PB_KeyDB.find_one()
         self.CompanyName = rsa_encrypt(pk, self.CompanyName)
