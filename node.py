@@ -24,7 +24,7 @@ def init_node():
     Download blockchain from node compare with local database and select the longest blockchain.
     """
     all_node_blockchains = rpc.broadCast().get_blockchain()
-    all_node_txs = rpc.BroadCast().get_datas()
+    all_node_txs = rpc.broadCast().get_datas()
     bcdb = BlockChainDB()
     txdb = DataDB()
     blockchain = bcdb.find_all()

@@ -67,7 +67,7 @@ class Tx():
             cprint('Data',t)
 
     def transfer(self, args):
-        tx = Data.transfer(args[0], args[1], args[2])
+        tx = AData.transfer(args[0], args[1], args[2],args)
         print(Data.unblock_spread(tx))
         cprint('Data tranfer',tx)
 
