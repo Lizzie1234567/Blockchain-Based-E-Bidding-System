@@ -44,7 +44,7 @@ class RpcServer():
         cprint('INFO', "Receive new blocked datas.")
         return True
 
-    def add_node(self, address):
+    def add_node(self, address,a: int):
         add_node(address)
         return True
 
@@ -65,7 +65,7 @@ class RpcClient():
         return noname
 
 
-class BroadCast():
+class broadCast():
 
     def __getattr__(self, name):
         def noname(*args, **kw):

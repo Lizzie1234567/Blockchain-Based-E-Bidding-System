@@ -1,7 +1,7 @@
 from database import S_AccountDB
 import random
 
-def PoA():
+def PoA() ->str :
 
     sadb=S_AccountDB()
     validators=sadb.find_all()
