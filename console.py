@@ -22,9 +22,9 @@ def upper_first(string):
 
 class node():
 
-    def add(self, args, a):
-        add_node(args[0], a)
-        rpc.broadCast().add_node(args[0], a)
+    def add(self, args):
+        add_node(args[0])
+        rpc.broadCast().add_node(args[0])
         cprint('Allnode', get_nodes())
 
     def run(self, args):
