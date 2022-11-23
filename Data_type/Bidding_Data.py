@@ -18,18 +18,15 @@ from .AData import EnumDataType, AData
 
 class Bidding_Data(AData):
 
-    def __init__(self, CompanyName: str = None, NodeAddress=None, msg="Nothing", signature: str = None):
-        self.CompanyName = CompanyName
-        self.NodeAddress = NodeAddress
-        self.timestamp = int(time.time())
+    def __init__(self, credit=0, msg="Nothing"):
+        self.credit = credit
         self.msg = msg
-        self.signature = signature
         self.hash = self.gen_hash()
         self.datatype = self.data_type()
 
     @property
     def data_type(self) -> int:
-        return EnumDataType.Date_Transfer
+        return EnumDataType.Bidding_Data
 
     def gen_hash(self):
         return hashlib.sha256((str(self.timestamp) + str(self.CompanyName) + str(self.signature)
