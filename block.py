@@ -3,6 +3,7 @@
 from model import Model
 from rpc import BroadCast
 from CA_Sig.Dhash import Dhash
+from CA_Sig.Dhash import Dhash
 
 
 class Block(Model):

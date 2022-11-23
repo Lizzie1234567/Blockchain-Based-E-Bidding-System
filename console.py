@@ -16,26 +16,13 @@ MODULES = ['account','tx','blockchain','miner','node']
 def upper_first(string):
     return string[0].upper()+string[1:]
 
-class biddingUser():
-
-    def add(self, args):
-        add_node(args[0])
-        rpc.BroadCast().add_node(args[0])
-        cprint('Allnode',get_nodes())
-    
-    def run(self, args):
-        start_node(args[0])
-
-    def list(self, args):
-        for t in NodeDB().find_all():
-            cprint('Node',t)
 
 
-class tenderUser():
+class node():
 
-    def add(self, args):
-        add_node(args[0])
-        rpc.BroadCast().add_node(args[0])
+    def add(self, args,a):
+        add_node(args[0],a)
+        rpc.BroadCast().add_node(args[0],a)
         cprint('Allnode', get_nodes())
 
     def run(self, args):
