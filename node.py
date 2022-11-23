@@ -47,22 +47,12 @@ def get_nodes():
     return NodeDB().find_all()
 
 
-def add_node(address, a: int):
-    if a == 1:
-        ndb = S_AccountDB()
-        all_nodes = ndb.find_all()
-    elif a == 2:
-        ndb = T_AccountDB()
-        all_nodes = ndb.find_all()
-    elif a == 3:
-        ndb = B_AccountDB()
-        all_nodes = ndb.find_all()
-    else:
-        Exception("Error input")
-
+def add_node(address):
+    ndb = NodeDB()
+    all_nodes = ndb.find_all()
     if address.find('http') != 0:
         address = 'http://' + address
-    all_nodes.append(address)
+        all_nodes.append(address)
     ndb.clear()
     ndb.write(rm_dup(all_nodes))
     return address

@@ -1,14 +1,18 @@
 # coding:utf-8
 import hashlib
+
+import const
 import lib.common
 from model import Model
 from lib.common import pubkey_to_address
 from database import S_AccountDB
 from database import T_AccountDB
 from database import B_AccountDB
+from const import Const
 
 
 def S_account():
+    Const.Permission_Level = 0
     private_key = lib.common.random_key()
     public_key = lib.common.hash160(private_key.encode())
     address = pubkey_to_address(public_key.encode())
@@ -18,6 +22,7 @@ def S_account():
 
 
 def T_account():
+    Const.Permission_Level = 1
     private_key = lib.common.random_key()
     public_key = lib.common.hash160(private_key.encode())
     address = pubkey_to_address(public_key.encode())
@@ -27,6 +32,7 @@ def T_account():
 
 
 def B_account():
+    Const.Permission_Level = 2
     private_key = lib.common.random_key()
     public_key = lib.common.hash160(private_key.encode())
     address = pubkey_to_address(public_key.encode())
