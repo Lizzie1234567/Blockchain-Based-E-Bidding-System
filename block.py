@@ -1,62 +1,33 @@
 # coding:utf-8
-import hashlib
-import time
+
 from model import Model
 from rpc import BroadCast
+from Dhash import Dhash
 
 
 class Block(Model):
 
-    def __init__(self, index, timestamp, data, preHash):
+    def __init__(self, index, timestamp, data, preHash, Btype):
         self.index = index
         self.timestamp = timestamp
         self.data = data
         self.preHash = preHash
+        self.Btype = Btype
+        self.hash = ''
 
     def header_hash(self):
         """
         Refer to bitcoin block header hash
         """
-        return hashlib.sha256(
-            (str(self.index) + str(self.timestamp) + str(self.data) + str(self.previous_block)).encode(
-                'utf-8')).hexdigest()
+        return Dhash.Dhash(str(self.index) + str(self.timestamp) + str(self.data) + str(self.preHash) + self.Btype)
 
-    def pow(self):
-        """
-        Proof of work. Add nouce to block.
-        """
-        nouce = 0
-        while self.valid(nouce) is False:
-            nouce += 1
-        self.nouce = nouce
-        return nouce
-
-    def make(self, nouce):
-        """
-        Block hash generate. Add hash to block.
-        """
-        self.hash = self.ghash(nouce)
-
-    def ghash(self, nouce):
-        """
-        Block hash generate.
-        """
-        header_hash = self.header_hash()
-        token = ''.join((header_hash, str(nouce))).encode('utf-8')
-        return hashlib.sha256(token).hexdigest()
-
-    def valid(self, nouce):
-        """
-        Validates the Proof
-        """
-        return self.ghash(nouce)[:4] == "0000"
 
     def to_dict(self):
         return self.__dict__
 
     @classmethod
     def from_dict(cls, bdict):
-        b = cls(bdict['index'], bdict['timestamp'], bdict['tx'], bdict['previous_block'])
+        b = cls(bdict['index'], bdict['timestamp'], bdict['data'], bdict['preHash'], bdict['type'])
         b.hash = bdict['hash']
         b.nouce = bdict['nouce']
         return b
@@ -64,3 +35,7 @@ class Block(Model):
     @staticmethod
     def spread(block):
         BroadCast().new_block(block)
+
+
+
+
