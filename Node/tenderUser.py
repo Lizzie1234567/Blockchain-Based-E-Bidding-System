@@ -35,9 +35,11 @@ from Node import Node
 #     return cb
 
 class tenderUser(Node):
-    def __int__(self,public_key: str =None,private_key: str = None,Etype: int = 2):
+    def __int__(self,public_key: str =None,private_key: str = None,Etype: int = 2,address: str =None):
         self.public_key=public_key
         self.private_key=private_key
+        self.address=address
+        self.Etype=Etype
 
 
 
