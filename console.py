@@ -1,5 +1,6 @@
 # coding:utf-8
 from account import *
+from miner import mine
 from rpc import get_clients, broadCast, start_server
 from data import *
 from database import *
@@ -37,7 +38,7 @@ class node():
 
 class miner():
     def start(self, args):
-        if get_account() == None:
+        if get_B_account() == None:
             cprint('ERROR', 'Please create account before start miner.')
             exit()
         start_node(PoA())
@@ -59,10 +60,10 @@ class Account():
         cprint('Address', ac[2])
 
     def get(self, args):
-        cprint('All Account', AccountDB().read())
+        cprint('All Account', S_account().read())
 
     def current(self, args):
-        cprint('Current Account', get_account())
+        cprint('Current Account', get_S_account())
 
 
 class Blockchain():
