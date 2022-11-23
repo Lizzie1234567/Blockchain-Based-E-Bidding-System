@@ -5,7 +5,6 @@ from data import *
 from database import *
 from block import *
 import sys
-from miner import mine
 import multiprocessing
 import rpc 
 from node import *

@@ -99,7 +99,37 @@ class B_AccountDB(BaseDB):
         ac = self.read()
         return ac[0]
 
+class PB_KeyDB(BaseDB):
+    def set_path(self):
+        self.filepath = PK_BIDDINGFILE
 
+    def find_one(self):
+        ac = self.read()
+        return ac[0]
+
+class SB_KeyDB(BaseDB):
+    def set_path(self):
+        self.filepath = SK_BIDDINGFILE
+
+    def find_one(self):
+        ac = self.read()
+        return ac[0]
+
+class PT_KeyDB(BaseDB):
+    def set_path(self):
+        self.filepath = PK_TENDERFILE
+
+    def find_one(self):
+        ac = self.read()
+        return ac[0]
+
+class ST_KeyDB(BaseDB):
+    def set_path(self):
+        self.filepath = SK_TENDERFILE
+
+    def find_one(self):
+        ac = self.read()
+        return ac[0]
 
 
 class BlockChainDB(BaseDB):
