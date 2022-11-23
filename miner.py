@@ -14,7 +14,7 @@ def coinbase():
     cb = Block(0, int(time.time()), dt,[dt.get_hash], 1)
     # Save block and transactions to database.
     BlockChainDB().insert(cb.to_dict())
-    DataDB().insert(rw.to_dict())
+    DataDB().insert(dt.to_dict())
     return cb
 
 def get_all_undatas():
@@ -25,6 +25,7 @@ def mine():
     Main miner method.
     """
     # Found last block and unchecked transactions.
+    global cb
     last_block = BlockChainDB().last()
     if len(last_block) == 0:
         last_block = coinbase().to_dict()
@@ -56,14 +57,38 @@ def mine():
     # untxs_dict = [untx.to_dict() for untx in untxs]
     # Clear the untransaction database.
     untxdb.clear()
-    cb = Block( last_block['index'] + 1, int(time.time()), last_block['hash'])
+    lb=last_block['index']
+    if Tender_Data_list:
+        lb=lb+1
+        cb = Block(lb, int(time.time()),Tender_Data_list,last_block['hash'])
+        cb.get_hash()
+        BlockChainDB().insert(cb.to_dict())
+        Block.spread(cb.to_dict())
+    elif Bidding_Data_list:
+        lb = lb + 1
+        cb = Block(lb, int(time.time()),Bidding_Data_list,last_block['hash'])
+        cb.get_hash()
+        BlockChainDB().insert(cb.to_dict())
+        Block.spread(cb.to_dict())
+    elif AnonyWin_Data_list:
+        lb = lb + 1
+        cb = Block(lb, int(time.time()),AnonyWin_Data_list,last_block['hash'])
+        cb.get_hash()
+        BlockChainDB().insert(cb.to_dict())
+        Block.spread(cb.to_dict())
+    elif PublicWin_Data_list:
+        lb = lb + 1
+        cb = Block( lb, int(time.time()),PublicWin_Data_list,last_block['hash'])
+        cb.get_hash()
+        BlockChainDB().insert(cb.to_dict())
+        Block.spread(cb.to_dict())
+
     # Save block and transactions to database.
-    BlockChainDB().insert(cb.to_dict())
+
     DataDB().insert(untxs)
     # Broadcast to other nodes
-    Block.spread(cb.to_dict())
     AData.blocked_spread(untxs)
-    return cb
+    # return cb
 
 
 

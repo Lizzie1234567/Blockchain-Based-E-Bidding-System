@@ -1,7 +1,7 @@
 # coding:utf-8
 
 from model import Model
-from rpc import BroadCast
+from rpc import broadCast
 from CA_Sig.Dhash import Dhash
 from CA_Sig.Dhash import Dhash
 
@@ -11,10 +11,10 @@ class Block(Model):
     def __init__(self, index, timestamp, data, preHash, Btype):
         self.index = index
         self.timestamp = timestamp
-        self.data = data
+        self.data: list = data
         self.preHash = preHash
         self.Btype = Btype
-        self.hash = ''
+        self.hash = ""
 
     def get_hash(self):
         self.hash = Dhash.Dhash(str(self.index) + str(self.timestamp) + str(self.data) + str(self.preHash) + self.Btype)
@@ -31,8 +31,4 @@ class Block(Model):
 
     @staticmethod
     def spread(block):
-        BroadCast().new_block(block)
-
-
-
-
+        broadCast().new_block(block)
