@@ -7,10 +7,10 @@ import time
 from data import Vout, Data
 from account import get_account
 from database import BlockChainDB, DataDB, UnDataDB
-from lib.common import unlock_sig, lock_sig, cprint
+from lib.common import cprint
 from Node import Node
 from account import *
-from G_key import *
+from CA.G_key import *
 
 
 

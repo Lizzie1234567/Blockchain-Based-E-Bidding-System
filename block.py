@@ -2,7 +2,7 @@
 
 from model import Model
 from rpc import BroadCast
-from Dhash import Dhash
+from CA.Dhash import Dhash
 
 
 class Block(Model):
