@@ -9,7 +9,7 @@ from account import get_account
 from database import BlockChainDB, DataDB, UnDataDB
 from lib.common import unlock_sig, lock_sig
 
-MAX_COIN = 21000000
+# MAX_COIN = 21000000
 
 
 # REWARD = 20
@@ -39,7 +39,7 @@ def get_all_undata():
     UnDataDB().all_hashes()
 
 
-def supervisor():
+def mine():
     """
     Main miner method.
     """
@@ -71,14 +71,16 @@ def supervisor():
     return cb
 
 
+
 class Data():
-    def __init__(self, name, bid_name, Etype=4, msg="Nothing"):
+    def __init__(self, name :str, bid_name :str, Etype=4, msg="Nothing",signature :str = None):
         self.Etype = Etype
-        self.timestamp = int(time.time())
+        self.timestamp = float(time.time())
         self.hash = self.gen_hash()
         self.msg = msg
         self.bid_name = bid_name
         self.name = name
+        self.signature=signature
 
     def gen_hash(self):
         return hashlib.sha256((str(self.timestamp) + str(self.vin) + str(self.vout)).encode('utf-8')).hexdigest()
