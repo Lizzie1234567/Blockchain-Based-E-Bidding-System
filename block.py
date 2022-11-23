@@ -2,7 +2,7 @@
 
 from model import Model
 from rpc import BroadCast
-from CA.Dhash import Dhash
+from CA_Sig.Dhash import Dhash
 
 
 class Block(Model):
@@ -17,7 +17,6 @@ class Block(Model):
 
     def get_hash(self):
         return Dhash.Dhash(str(self.index) + str(self.timestamp) + str(self.data) + str(self.preHash) + self.Btype)
-
 
     def to_dict(self):
         return self.__dict__

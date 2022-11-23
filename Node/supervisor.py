@@ -10,7 +10,7 @@ from database import BlockChainDB, DataDB, UnDataDB
 from lib.common import cprint
 from Node import Node
 from account import *
-from CA.G_key import *
+from CA_Sig.G_key import *
 
 
 
