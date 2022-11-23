@@ -1,4 +1,5 @@
 # coding:utf-8
+from Data_type import AData
 from account import *
 from rpc import get_clients, broadCast, start_server
 from data import *
@@ -73,10 +74,11 @@ class Tx():
         for t in DataDB().find_all():
             cprint('Data',t)
 
-    def transfer(self, args):
-        tx = AData.transfer(args[0], args[1], args[2],args)
-        print(Data.unblock_spread(tx))
-        cprint('Data tranfer',tx)
+
+    def publish(self,args):
+        dt = AData.publish(args[0],args[1],args[2],args[3])
+        print(AData.unblock_spread(dt))
+        cprint('Data publish',dt)
 
 def usage(class_name):
     module = globals()[upper_first(class_name)]
