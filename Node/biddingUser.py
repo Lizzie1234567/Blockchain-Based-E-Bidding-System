@@ -35,10 +35,11 @@ from Node import Node
 #     return cb
 
 class biddingUser(Node):
-    def __int__(self,public_key: str =None,private_key: str = None,Etype: int = 3):
+    def __int__(self,public_key: str =None,private_key: str = None,Etype: int = 3,address: str =None):
         self.public_key=public_key
         self.private_key=private_key
         self.Etype=Etype
+        self.address=address
 
 
 
