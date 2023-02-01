@@ -1,2 +1,8 @@
-$ python console account create <number>
-number:1: supervisor 2:tenderUser 3:biddingUser
+In the field of modern bidding, the electronic bidding platform provides some convenience for the bidding process. However, there are still some problems to be solved in information preservation and traceability. Therefore, many researchers and enterprises have proposed e-bidding platforms based on blockchain technology to ensure the integrity and security of bidding information. For example, Tencent Cloud launched the electronic bidding and bidding blockchain platform for the Shenzhen Construction project in May 2020 in mainland China. However, most of the current blockchain-based e-bidding systems only use the distributed architecture and immutable characteristics of the blockchain to solve part of the trust problem of online bidding. However, it is difficult to ensure the privacy and anonymity of some users, and the whole bidding process still has the opportunity to exploit. Therefore, this paper proposes a targeted encryption scheme for different parts of bidding information and implements it in a self-designed blockchain-based e-bidding system.
+
+Our blockchain-based e-bidding system uses PoA to ensure that the system could work continuously if any node has been crashed. Besides, we use ECC to encrypt the specific parts of the data. As a result, the tender and bidding parties have less chance to cheat during the whole process. 
+
+By using blockchain technology, all tender, bidding, and bid winning information will not be tampered with and easy to trace. By encrypting the bidder information, we have prevented backroom collusion between the tender and bidding companies. By encrypting the bidding product information, we have solved the problems of product data theft, malicious underpricing and malicious competition among bidding companies. 
+
+
+ 
